@@ -24,6 +24,7 @@ namespace MarsRovers.Test.Domain.Entities
         {
             var plateau = new Plateau(5, 5);
             var position = new Position(x, y);
+            
             Assert.False(plateau.IsValidPosition(position));
         }
 
@@ -32,6 +33,7 @@ namespace MarsRovers.Test.Domain.Entities
         {
             var plateau = new Plateau(5, 5);
             var position = new Position(1, 1);
+
             Assert.False(plateau.IsOccupied(position));
         }
 
@@ -40,7 +42,9 @@ namespace MarsRovers.Test.Domain.Entities
         {
             var plateau = new Plateau(5, 5);
             var position = new Position(2, 2);
+
             plateau.RegisterPosition(position);
+
             Assert.True(plateau.IsOccupied(position));
         }
 
