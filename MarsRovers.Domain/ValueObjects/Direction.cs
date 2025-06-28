@@ -1,5 +1,6 @@
 namespace MarsRovers.Domain.ValueObjects;
 
-public enum Direction {
+public enum Direction
+{
     N, E, S, W
 }

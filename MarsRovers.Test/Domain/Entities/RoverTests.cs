@@ -1,7 +1,7 @@
 using MarsRovers.Domain.Entities;
 using MarsRovers.Domain.ValueObjects;
 
-namespace Test.MarsRovers.Domain.Entities;
+namespace MarsRovers.Test.Domain.Entities;
 
 public class RoverTests
 {
