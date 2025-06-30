@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET 8
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.x'
 
@@ -34,7 +34,7 @@ jobs:
         echo "# Test Results" >> test_results/README.md
         echo "" >> test_results/README.md
 
-        dotnet test --no-build >> test_results/README.md
+        dotnet test ./MarsRovers.sln --configuration Debug >> test_results/README.md
 
     - name: Commit and push test results
       run: |
@@ -47,7 +47,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload markdown results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results-markdown
         path: test_results/README.md
