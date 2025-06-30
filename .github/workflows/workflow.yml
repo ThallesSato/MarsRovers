@@ -1,0 +1,53 @@
+name: .NET run tests 
+
+on: 
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: |
+        mkdir -p test_results
+        echo "# Compilation Results" > test_results/README.md
+        echo "" >> test_results/README.md
+        
+        dotnet build --no-restore --configuration Release >> test_results/README.md
+
+    - name: Run tests
+      run: |
+        echo "# Test Results" >> test_results/README.md
+        echo "" >> test_results/README.md
+
+        dotnet test --no-build >> test_results/README.md
+
+    - name: Commit and push test results
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add test_results/README.md
+        git commit -m "Add test results"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload markdown results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-markdown
+        path: test_results/README.md
